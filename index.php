@@ -1,3 +1,7 @@
+<?php
+require_once('ShareFiles.php');
+?>
+
 <html>
     <head>
         <meta charset="utf-8" />
@@ -16,18 +20,32 @@
 
         <section>
             <h1>
-                <i class="fas fa-paper-plane"></i>
+                <?php
+                // Condiftion qui vérifie si la variable $send existe et si ell vaut bien TRUE
+                    if(isset($send) && $send){
+                        echo '<img src="uploads/'.$newImageName.'" alt="ShareFiles" style="max-width: 75%">';
+                    }
+                    else{
+                        echo '<i class="fas fa-paper-plane"></i>';
+                    }
+                ?>
             </h1>
-
-            <form method="post" action="index.php" enctype="multipart/form-data">
-                <p>
-                    <label for="image">Sélectionnez votre fichier</label><br>
-                    <input type="file" name="image" id="image">
-                </p>
-                <p id="send">
-                    <button type="submit">Envoyer <i class="fas fa-long-arrow-alt-right"></i></button>
-                </p>
-            </form>
+            
+            <?php if(isset($send) && $send){ ?>
+                <h2>Fichier envoyé avec succès !</h2>
+                <p>Retrouvez ci-dessous le lien vers votre fichier :</p>
+                <input type="text" id="link" value="http://localhost/uploads/<?= $newImageName ?>" readonly>
+            <?php } else{ ?> 
+                <form method="post" action="ShareFiles.php" enctype="multipart/form-data">
+                    <p>
+                        <label for="image">Sélectionnez votre fichier</label><br>
+                        <input type="file" name="image" id="image">
+                    </p>
+                    <p id="send">
+                        <button type="submit">Envoyer <i class="fas fa-long-arrow-alt-right"></i></button>
+                    </p>
+                </form>
+            <?php } ?>
         </section>
         
     </body>
